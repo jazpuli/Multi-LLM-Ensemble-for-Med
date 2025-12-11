@@ -1,0 +1,68 @@
+# Experiment Configuration
+
+# Dataset settings
+datasets:
+  pubmedqa:
+    name: pubmed_qa
+    config: pqa_labeled
+    split: validation
+    sample_size: 10000
+    enabled: true
+
+  medqa_usmle:
+    name: medqa
+    config: usmle
+    split: test
+    sample_size: 12700
+    enabled: true
+
+  medmcqa:
+    name: medmcqa
+    split: test
+    sample_size: 50000
+    enabled: true
+
+# Ensemble settings
+ensemble:
+  boosting:
+    name: "Boosting-Based Weighted Majority Vote"
+    enabled: true
+    weight_update_frequency: 1000
+    difficulty_adjustment: true
+    confidence_weighting: true
+
+  dynamic_selection:
+    name: "Cluster-Based Dynamic Model Selection"
+    enabled: true
+    embedding_model: distiluse-base-multilingual-cased-v2
+    n_clusters: 10
+    clustering_method: kmeans  # kmeans or hdbscan
+    cluster_selection_threshold: 0.5
+
+# Evaluation settings
+evaluation:
+  primary_metric: accuracy
+  secondary_metrics:
+    - calibration
+    - disagreement_rate
+    - category_accuracy
+  
+  error_analysis:
+    enable_error_classification: true
+    top_k_failures: 20
+    save_error_examples: true
+
+# Inference settings
+inference:
+  batch_size: 32
+  timeout_seconds: 60
+  retry_attempts: 3
+  cache_results: true
+  cache_dir: ./results/cache
+
+# Logging
+logging:
+  level: INFO
+  log_file: ./logs/experiment.log
+  save_predictions: true
+  save_predictions_dir: ./results/predictions
