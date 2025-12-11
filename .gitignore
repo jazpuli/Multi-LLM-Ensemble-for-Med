@@ -6,9 +6,10 @@ config/api_keys.yaml
 .env.local
 
 # Data
-data/
-*.csv
-*.json
+# (Allow `data/` and JSON files to be tracked in the repo — uncomment if you want to keep them ignored)
+#data/
+#*.csv
+#*.json
 
 # Python
 __pycache__/
