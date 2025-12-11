@@ -1,0 +1,202 @@
+[
+  {
+    "id": "21645374",
+    "pubmed_id": 21645374,
+    "question": "What is shown about mitochondrial dynamics during programmed cell death in lace plant?",
+    "long_answer": "Results depicted mitochondrial dynamics in vivo as PCD progresses within the lace plant, and highlight the correlation of this organelle with other organelles during developmental PCD. To the best of our knowledge, this is the first report of mitochondria and chloroplasts moving on transvacuolar strands to form a ring structure surrounding the nucleus during developmental PCD. Also, for the first time, we have shown the feasibility for the use of CsA in a whole plant system. Overall, our findings implicate the mitochondria as playing a critical and early role in developmentally regulated PCD in the lace plant.",
+    "answer_type": "yes",
+    "gold_label": "yes"
+  },
+  {
+    "id": "16418930",
+    "pubmed_id": 16418930,
+    "question": "Does Snellen E chart accurately measure visual acuity compared to Landolt C?",
+    "long_answer": "Using the charts described, there was only a slight overestimation of visual acuity by the Snellen E compared to the Landolt C, even in strabismus amblyopia. Small differences in the lower visual acuity range have to be considered.",
+    "answer_type": "yes",
+    "gold_label": "yes"
+  },
+  {
+    "id": "9488747",
+    "pubmed_id": 9488747,
+    "question": "Could aquagenic maladies be a pediatric form of aquagenic urticaria?",
+    "long_answer": "Aquagenic maladies could be a pediatric form of the aquagenic urticaria.",
+    "answer_type": "maybe",
+    "gold_label": "maybe"
+  },
+  {
+    "id": "17208539",
+    "pubmed_id": 17208539,
+    "question": "Does abdominal approach show better results than transanal pull-through in long-term follow-up?",
+    "long_answer": "Our long-term study showed significantly better (2-fold) results regarding the continence score for the abdominal approach compared with the transanal pull-through. The stool pattern and enterocolitis scores were somewhat better for the TERPT group. These findings raise an important issue about the current surgical management of HD; however, more cases will need to be studied before a definitive conclusion can be drawn.",
+    "answer_type": "yes",
+    "gold_label": "yes"
+  },
+  {
+    "id": "10808977",
+    "pubmed_id": 10808977,
+    "question": "Is telephone counseling effective at promoting mammography screening change in nonadherent women?",
+    "long_answer": "The effects of the intervention were most pronounced after the first intervention. Compared to usual care, telephone counseling seemed particularly effective at promoting change among nonadherent women, the group for whom the intervention was developed. These results suggest that telephone counseling, rather than tailored print, might be the preferred first-line intervention for getting nonadherent women on schedule for mammography screening.",
+    "answer_type": "yes",
+    "gold_label": "yes"
+  },
+  {
+    "id": "23831910",
+    "pubmed_id": 23831910,
+    "question": "Does double-balloon endoscopy show comparable outcomes in community settings versus tertiary centers?",
+    "long_answer": "DBE appears to be equally safe and effective when performed in the community setting as compared to a tertiary referral center with a comparable yield, efficacy, and complication rate.",
+    "answer_type": "yes",
+    "gold_label": "yes"
+  },
+  {
+    "id": "26037986",
+    "pubmed_id": 26037986,
+    "question": "Does emergency laparotomy carry high mortality rates, especially in elderly patients?",
+    "long_answer": "Emergency laparotomy carries a high rate of mortality, especially in those over the age of 70 years, and more needs to be done to improve outcomes, particularly in this group.",
+    "answer_type": "yes",
+    "gold_label": "yes"
+  },
+  {
+    "id": "26852225",
+    "pubmed_id": 26852225,
+    "question": "Are sleep disorders common in the general adult population of Japan?",
+    "long_answer": "Sleep disorders are common in the general adult population of Japan. Correction for reporting heterogeneity using anchoring vignettes is not a necessary tool for proper management of sleep and energy related problems among Japanese adults.",
+    "answer_type": "yes",
+    "gold_label": "yes"
+  },
+  {
+    "id": "17113061",
+    "pubmed_id": 17113061,
+    "question": "Can genetic variants identified promote early carotid atherosclerosis?",
+    "long_answer": "Genetic variants identified in the present study may be insufficient to promote early carotid atherosclerosis.",
+    "answer_type": "no",
+    "gold_label": "no"
+  },
+  {
+    "id": "10966337",
+    "pubmed_id": 10966337,
+    "question": "Does short stay ward improve bed efficiency and patient care cost-effectively?",
+    "long_answer": "This data demonstrates the robust nature of the short stay ward. At these two very different institutions we have shown improved bed efficient and patient care in a cost-effective way.",
+    "answer_type": "yes",
+    "gold_label": "yes"
+  },
+  {
+    "id": "25432938",
+    "pubmed_id": 25432938,
+    "question": "Do traffic law reforms affect traffic fatality and injury rates reduction?",
+    "long_answer": "Findings suggest that traffic law reforms in order to have an effect on both traffic fatality and injury rates reduction require changes in police enforcement practices.",
+    "answer_type": "yes",
+    "gold_label": "yes"
+  },
+  {
+    "id": "18847643",
+    "pubmed_id": 18847643,
+    "question": "Do trauma patients on anticoagulation therapy have significant complication rates?",
+    "long_answer": "Trauma patients have a significant complication rate related to anticoagulation therapy, and predicting which patients will develop a complication remains unclear.",
+    "answer_type": "yes",
+    "gold_label": "yes"
+  },
+  {
+    "id": "18239988",
+    "pubmed_id": 18239988,
+    "question": "Do higher MCVs and AST/ALT ratios differentiate NASH from ASH?",
+    "long_answer": "Higher MCVs and AST/ALT ratios in ASH reflect the severity of underlying liver disease and do not differentiate NASH from ASH.",
+    "answer_type": "no",
+    "gold_label": "no"
+  },
+  {
+    "id": "25957366",
+    "pubmed_id": 25957366,
+    "question": "Does family history prompt improve primary care physicians' ability to identify high-risk patients?",
+    "long_answer": "No change occurred upon instituting simple, at-the-visit family history prompts geared to improve PCPs' ability to identify patients at high risk for 6 common conditions.",
+    "answer_type": "no",
+    "gold_label": "no"
+  },
+  {
+    "id": "24866606",
+    "pubmed_id": 24866606,
+    "question": "Do emergency ultrasound fellowship programs improve residents' ultrasound education?",
+    "long_answer": "Emergency US fellowship programs had a positive impact on residents' US educational experiences. Emergency medicine residents performed more scans overall and also used bedside US for more advanced applications in programs with EUS fellowships.",
+    "answer_type": "yes",
+    "gold_label": "yes"
+  },
+  {
+    "id": "26578404",
+    "pubmed_id": 26578404,
+    "question": "Is opioid patient-controlled transdermal therapy feasible for refractory breathlessness?",
+    "long_answer": "Opioid PCT is a feasible and acceptable therapeutic method to reduce refractory breathlessness in palliative care patients.",
+    "answer_type": "yes",
+    "gold_label": "yes"
+  },
+  {
+    "id": "11729377",
+    "pubmed_id": 11729377,
+    "question": "Do short-term and long-term outcomes differ between living-related and split-liver transplantation?",
+    "long_answer": "The short- and long-term outcomes after LRT and SLT did not differ significantly. To avoid the risk for the donor in LRT, SLT represents the first-line therapy in pediatric liver transplantation.",
+    "answer_type": "no",
+    "gold_label": "no"
+  },
+  {
+    "id": "17096624",
+    "pubmed_id": 17096624,
+    "question": "Are cluster analyses useful for identifying groups for targeted health messages?",
+    "long_answer": "Findings suggest that cluster analyses may be useful in identifying groups for targeted health messages.",
+    "answer_type": "yes",
+    "gold_label": "yes"
+  },
+  {
+    "id": "22694248",
+    "pubmed_id": 22694248,
+    "question": "Is retroperitoneoscopy feasible in a porcine model for teaching?",
+    "long_answer": "RPN in a porcine model is feasible and could be very useful for teaching and practicing retroperitoneoscopy.",
+    "answer_type": "yes",
+    "gold_label": "yes"
+  },
+  {
+    "id": "22990761",
+    "pubmed_id": 22990761,
+    "question": "Are resting heart rate and cardiovascular risk factors associated in sub-Saharan Africa?",
+    "long_answer": "Significant associations were observed between RHR and several established cardiovascular risk factors. Prospective studies are needed in sub-Saharan African populations to establish the potential value of RHR in cardiovascular risk assessment.",
+    "answer_type": "yes",
+    "gold_label": "yes"
+  },
+  {
+    "id": "19394934",
+    "pubmed_id": 19394934,
+    "question": "Can hospital preparedness be better defined by a fixed number of casualties?",
+    "long_answer": "Hospital preparedness can be better defined by a fixed number of casualties rather than a percentile of its bed capacity. Only 20% of the arriving casualties will require immediate medical treatment.",
+    "answer_type": "yes",
+    "gold_label": "yes"
+  },
+  {
+    "id": "11481599",
+    "pubmed_id": 11481599,
+    "question": "Can peak inspiratory pressure and ventilation index distinguish ARDS survivors?",
+    "long_answer": "Peak inspiratory pressure, PEEP, and ventilation index values could distinguish survivors from nonsurvivors by day 3 in children with malignancy and ARDS.",
+    "answer_type": "yes",
+    "gold_label": "yes"
+  },
+  {
+    "id": "21669959",
+    "pubmed_id": 21669959,
+    "question": "Do disadvantaged families have lower rates of protective health behaviors against secondhand smoke?",
+    "long_answer": "The most disadvantaged families were least likely to have protective health behaviors in place to reduce SHSe and are most at-risk for tobacco exposure.",
+    "answer_type": "yes",
+    "gold_label": "yes"
+  },
+  {
+    "id": "23806388",
+    "pubmed_id": 23806388,
+    "question": "Do nomograms predict prostate cancer-specific mortality better than biochemical recurrence?",
+    "long_answer": "Currently available nomograms used to predict BCR accurately predict PCSM and other more clinically relevant endpoints with generally greater accuracy than BCR.",
+    "answer_type": "yes",
+    "gold_label": "yes"
+  },
+  {
+    "id": "17919952",
+    "pubmed_id": 17919952,
+    "question": "Are mechanical factors associated with chronic orofacial pain confounded by psychological factors?",
+    "long_answer": "Self-reported mechanical factors associated with chronic oro-facial pain are confounded in part by psychological factors and may represent another feature of somatisation.",
+    "answer_type": "yes",
+    "gold_label": "yes"
+  }
+]
