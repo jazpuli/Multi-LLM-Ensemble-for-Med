@@ -1,0 +1,22 @@
+{
+  "datasets": {
+    "medqa_usmle": {
+      "train": 11495,
+      "test": 2874
+    },
+    "pubmedqa": {
+      "train": 800,
+      "test": 200
+    },
+    "medmcqa": {
+      "train": 3346,
+      "test": 837
+    }
+  },
+  "total": {
+    "train": 15641,
+    "test": 3911
+  },
+  "split_ratio": "80/20",
+  "random_seed": 42
+}

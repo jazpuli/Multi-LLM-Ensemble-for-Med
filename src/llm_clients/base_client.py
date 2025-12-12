@@ -55,13 +55,15 @@ class BaseLLMClient(ABC):
         """
         pass
 
-    def format_question(self, question: str, options: Optional[list] = None) -> str:
+    def format_question(self, question: str, options: Optional[list] = None, 
+                        use_cot: bool = True) -> str:
         """
-        Format a medical question for the LLM.
+        Format a medical question for the LLM with chain-of-thought prompting.
         
         Args:
             question: Question text
             options: Multiple choice options
+            use_cot: Use chain-of-thought reasoning
             
         Returns:
             Formatted prompt
@@ -69,7 +71,19 @@ class BaseLLMClient(ABC):
         if options:
             options_str = "\n".join([f"{chr(65+i)}. {opt}" for i, opt in enumerate(options)])
             last_letter = chr(65 + max(0, len(options) - 1))
-            # Strict instruction to force single-letter output
-            instruction = f"Answer with exactly one letter (A–{last_letter}) and nothing else."
-            return f"{question}\n\n{options_str}\n\n{instruction}\n\nAnswer:"
+            
+            if use_cot:
+                # Chain-of-thought medical reasoning prompt
+                instruction = f"""Think through this step-by-step:
+1. First, identify the key medical concepts and clinical findings in the question.
+2. Consider each option and evaluate it against the clinical presentation.
+3. Apply relevant medical knowledge to determine the most appropriate answer.
+4. State your final answer as a single letter (A-{last_letter}).
+
+Your response must end with "Final Answer: X" where X is the letter."""
+                return f"Medical Question:\n{question}\n\nOptions:\n{options_str}\n\n{instruction}"
+            else:
+                # Simple direct answer format
+                instruction = f"Answer with exactly one letter (A–{last_letter}) and nothing else."
+                return f"{question}\n\n{options_str}\n\n{instruction}\n\nAnswer:"
         return f"{question}\n\nAnswer:"

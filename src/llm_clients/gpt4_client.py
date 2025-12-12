@@ -48,13 +48,23 @@ class GPT4Client(BaseLLMClient):
 
         for attempt in range(retries):
             try:
+                system_prompt = """You are a highly skilled medical expert with extensive knowledge of clinical medicine, pathophysiology, pharmacology, and medical diagnostics. You have years of experience in medical practice and board exam preparation.
+
+When answering medical questions:
+1. Carefully analyze all clinical findings and patient information
+2. Consider differential diagnoses and rule out alternatives
+3. Apply evidence-based medical reasoning
+4. Provide your final answer clearly
+
+Always end your response with "Final Answer: X" where X is the letter of your chosen option."""
+                
                 response = self.client.chat.completions.create(
                     model="gpt-4o",
                     messages=[
-                        {"role": "system", "content": "You are a medical expert assistant."},
+                        {"role": "system", "content": system_prompt},
                         {"role": "user", "content": prompt}
                     ],
-                    temperature=temp,
+                    temperature=0.3,  # Lower temperature for more consistent answers
                     max_tokens=max_tok
                 )
 
@@ -105,9 +115,45 @@ class GPT4Client(BaseLLMClient):
         
         return responses
 
+    async def query_async(self, prompt: str, temperature: Optional[float] = None,
+                          max_tokens: Optional[int] = None) -> Dict[str, Any]:
+        """Async version of query for parallel processing."""
+        import asyncio
+        from openai import AsyncOpenAI
+        
+        temp = temperature or 0.3
+        max_tok = max_tokens or self.max_tokens
+        
+        async_client = AsyncOpenAI(api_key=self.client.api_key)
+        
+        system_prompt = """You are a highly skilled medical expert. Analyze the question and provide your answer. Always end with "Final Answer: X" where X is your chosen letter."""
+        
+        try:
+            response = await async_client.chat.completions.create(
+                model="gpt-4o",
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": prompt}
+                ],
+                temperature=temp,
+                max_tokens=max_tok
+            )
+            
+            return {
+                "text": response.choices[0].message.content,
+                "confidence": 0.9,
+                "usage": {
+                    "input_tokens": response.usage.prompt_tokens,
+                    "output_tokens": response.usage.completion_tokens
+                }
+            }
+        except Exception as e:
+            logger.error(f"Async query error: {e}")
+            return {"text": "", "confidence": 0.0, "error": str(e)}
+
     def extract_answer(self, response_text: str, options: Optional[List[str]] = None) -> str:
         """
-        Extract answer from GPT-4 response.
+        Extract answer from GPT-4 response (handles chain-of-thought format).
         
         Args:
             response_text: Raw response text
@@ -124,24 +170,36 @@ class GPT4Client(BaseLLMClient):
         if not options:
             return text.split('\n')[0].strip()[:200]
 
-        # Normalize: try to find a letter A..(last) in the response and return it uppercase
         last_letter = chr(65 + max(0, len(options) - 1))
-        letter_pattern = rf"(?i)\b([A-{last_letter}])\b"
-
-        # Common patterns: 'Answer: D', 'D.', 'D)'
-        m = re.search(rf"(?im)answer\s*[:\-]?\s*([A-{last_letter}])", text)
-        if not m:
-            m = re.search(rf"(?im)^\s*([A-{last_letter}])(?:[\.\)])", text)
-        if not m:
-            m = re.search(letter_pattern, text)
-
+        
+        # Priority 1: Look for "Final Answer: X" pattern (chain-of-thought)
+        m = re.search(rf"(?i)final\s*answer\s*[:\-]?\s*([A-{last_letter}])", text)
+        if m:
+            return m.group(1).upper()
+        
+        # Priority 2: Look for "The answer is X" or "Answer: X"
+        m = re.search(rf"(?i)(?:the\s+)?answer\s+(?:is\s+)?[:\-]?\s*([A-{last_letter}])\b", text)
+        if m:
+            return m.group(1).upper()
+        
+        # Priority 3: Look for standalone letter at end of response
+        m = re.search(rf"(?im)[:\-]?\s*\(?([A-{last_letter}])\)?\s*$", text)
+        if m:
+            return m.group(1).upper()
+        
+        # Priority 4: Look for "Option X" or "X." at start of line
+        m = re.search(rf"(?im)(?:option\s+)?([A-{last_letter}])(?:[\.\)]|\s+is)", text)
+        if m:
+            return m.group(1).upper()
+        
+        # Priority 5: First standalone letter in valid range
+        m = re.search(rf"(?i)\b([A-{last_letter}])\b", text)
         if m:
             return m.group(1).upper()
 
-        # If model repeated the option text, match option text to its index and return letter
+        # Fallback: match option text to its index
         for i, option in enumerate(options):
             if isinstance(option, str) and re.search(re.escape(option), text, re.I):
                 return chr(65 + i)
 
-        # Fallback: empty string (no valid A.. letter found)
         return ""

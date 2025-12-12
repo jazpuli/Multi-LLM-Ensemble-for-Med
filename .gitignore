@@ -67,3 +67,14 @@ Thumbs.db
 temp/
 tmp/
 *.tmp
+
+# Research papers and project documentation (keep README and guides)
+RESEARCH_PAPER.md
+ORIGINAL_PAPER.md
+COMPLETION_SUMMARY.md
+MANIFEST.md
+PROJECT_INDEX.md
+PROJECT_PROPOSAL.md
+PROJECT_STATUS.md
+FINALIZED_PROJECT_PLAN.md
+results/FINAL_RESULTS.md

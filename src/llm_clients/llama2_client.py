@@ -40,6 +40,8 @@ class LLaMA2Client(BaseLLMClient):
             return "local_hpc"
         elif "localhost" in self.endpoint or "127.0.0.1" in self.endpoint:
             return "ollama"
+        elif self.config.get("use_openai_format") or "genai.rcac.purdue.edu" in self.endpoint:
+            return "openai_compatible"
         else:
             return "together_ai"
 
@@ -64,6 +66,8 @@ class LLaMA2Client(BaseLLMClient):
             return self._query_ollama(prompt, temp, max_tok, retries)
         elif self.backend == "together_ai":
             return self._query_together(prompt, temp, max_tok, retries)
+        elif self.backend == "openai_compatible":
+            return self._query_openai_compatible(prompt, temp, max_tok, retries)
         elif self.backend == "local_hpc":
             return self._query_local_hpc(prompt, temp, max_tok, retries)
         else:
@@ -157,6 +161,62 @@ class LLaMA2Client(BaseLLMClient):
 
         return {"text": "", "confidence": 0.0, "error": "Max retries exceeded"}
 
+    def _query_openai_compatible(self, prompt: str, temperature: float, max_tokens: int, retries: int) -> Dict[str, Any]:
+        """Query OpenAI-compatible API (e.g., Purdue GenAI, vLLM)."""
+        try:
+            from openai import OpenAI
+        except ImportError:
+            raise ImportError("Please install openai: pip install openai")
+        
+        # Create client pointing to the custom endpoint
+        client = OpenAI(
+            api_key=self.api_key,
+            base_url=self.endpoint
+        )
+        
+        system_prompt = """You are a medical expert assistant. Analyze the question carefully and provide your answer. Always end with "Final Answer: X" where X is your chosen letter."""
+        
+        for attempt in range(retries):
+            try:
+                response = client.chat.completions.create(
+                    model=self.model,
+                    messages=[
+                        {"role": "system", "content": system_prompt},
+                        {"role": "user", "content": prompt}
+                    ],
+                    temperature=temperature,
+                    max_tokens=max_tokens
+                )
+                
+                text = response.choices[0].message.content.strip()
+                
+                return {
+                    "text": text,
+                    "confidence": 0.85,
+                    "usage": {
+                        "input_tokens": getattr(response.usage, 'prompt_tokens', 0),
+                        "output_tokens": getattr(response.usage, 'completion_tokens', 0)
+                    },
+                    "model": self.model
+                }
+                
+            except Exception as e:
+                error_msg = str(e).lower()
+                if "rate" in error_msg and attempt < retries - 1:
+                    logger.warning(f"Rate limited, retrying... (attempt {attempt + 1}/{retries})")
+                    time.sleep(2 ** attempt)
+                elif attempt < retries - 1:
+                    logger.warning(f"Error querying {self.endpoint}, retrying... (attempt {attempt + 1}/{retries}): {e}")
+                    time.sleep(1)
+                else:
+                    logger.error(f"Error querying OpenAI-compatible API at {self.endpoint}: {e}")
+                    if self.use_gpt4_fallback:
+                        logger.info("Falling back to GPT-4o")
+                        return self._query_gpt4_fallback(prompt, temperature, max_tokens)
+                    return {"text": "", "confidence": 0.0, "error": str(e)}
+        
+        return {"text": "", "confidence": 0.0, "error": "Max retries exceeded"}
+
     def _query_local_hpc(self, prompt: str, temperature: float, max_tokens: int, retries: int) -> Dict[str, Any]:
         """Query LLaMA-2 on Purdue HPC (SSH or API endpoint)."""
         logger.warning("Local HPC query not yet fully implemented. Please use Ollama or Together AI.")
@@ -176,11 +236,11 @@ class LLaMA2Client(BaseLLMClient):
         except ImportError:
             raise ImportError("Please install openai: pip install openai")
         
-        # Get API key from environment or config
-        api_key = self.api_key if self.api_key else None
+        # Get OpenAI API key for fallback (passed from main config)
+        api_key = self.config.get("openai_api_key") if self.config else None
         if not api_key:
-            # Try to get from parent config
-            api_key = self.config.get("api_key") if self.config else None
+            import os
+            api_key = os.getenv("OPENAI_API_KEY")
         
         if not api_key:
             raise ValueError("OpenAI API key not found for GPT-4o fallback")
@@ -188,10 +248,15 @@ class LLaMA2Client(BaseLLMClient):
         client = OpenAI(api_key=api_key)
         
         try:
+            system_prompt = """You are a medical expert assistant. Analyze the question carefully and provide your answer. Always end with "Final Answer: X" where X is your chosen letter."""
+            
             response = client.chat.completions.create(
                 model="gpt-4o",
-                messages=[{"role": "user", "content": prompt}],
-                temperature=temperature,
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": prompt}
+                ],
+                temperature=0.3,  # Lower for consistency
                 max_tokens=max_tokens
             )
             
@@ -229,7 +294,7 @@ class LLaMA2Client(BaseLLMClient):
 
     def extract_answer(self, response_text: str, options: Optional[List[str]] = None) -> str:
         """
-        Extract answer from LLaMA-2 response.
+        Extract answer from LLaMA-2 response (handles chain-of-thought format).
         
         Args:
             response_text: Raw response text
@@ -246,18 +311,28 @@ class LLaMA2Client(BaseLLMClient):
             return text.split('\n')[0].strip()[:200]
 
         last_letter = chr(65 + max(0, len(options) - 1))
-        letter_pattern = rf"(?i)\b([A-{last_letter}])\b"
-
-        m = re.search(rf"(?im)answer\s*[:\-]?\s*([A-{last_letter}])", text)
-        if not m:
-            m = re.search(rf"(?im)^\s*([A-{last_letter}])(?:[\.\)])", text)
-        if not m:
-            m = re.search(letter_pattern, text)
-
+        
+        # Priority 1: Look for "Final Answer: X" pattern
+        m = re.search(rf"(?i)final\s*answer\s*[:\-]?\s*([A-{last_letter}])", text)
+        if m:
+            return m.group(1).upper()
+        
+        # Priority 2: Look for "The answer is X" or "Answer: X"
+        m = re.search(rf"(?i)(?:the\s+)?answer\s+(?:is\s+)?[:\-]?\s*([A-{last_letter}])\b", text)
+        if m:
+            return m.group(1).upper()
+        
+        # Priority 3: Standalone letter at end
+        m = re.search(rf"(?im)[:\-]?\s*\(?([A-{last_letter}])\)?\s*$", text)
+        if m:
+            return m.group(1).upper()
+        
+        # Priority 4: First letter in valid range
+        m = re.search(rf"(?i)\b([A-{last_letter}])\b", text)
         if m:
             return m.group(1).upper()
 
-        # Match option text -> return corresponding letter
+        # Fallback: match option text
         for i, option in enumerate(options):
             if isinstance(option, str) and re.search(re.escape(option), text, re.I):
                 return chr(65 + i)

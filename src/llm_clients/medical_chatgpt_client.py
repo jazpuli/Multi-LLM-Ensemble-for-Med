@@ -49,10 +49,21 @@ class MedicalChatGPTClient(BaseLLMClient):
 
         for attempt in range(retries):
             try:
+                system_prompt = """You are an expert medical AI assistant specialized in clinical medicine, diagnostics, and medical board exam questions. You excel at:
+- Analyzing clinical presentations and patient histories
+- Identifying key diagnostic clues and symptoms
+- Applying medical knowledge to multiple choice questions
+- Providing evidence-based reasoning
+
+Analyze each question carefully, consider all options, and provide your answer. Always conclude with "Final Answer: X" where X is your chosen letter."""
+
                 response = self.client.chat.completions.create(
                     model=self.model,
-                    messages=[{"role": "user", "content": prompt}],
-                    temperature=temp,
+                    messages=[
+                        {"role": "system", "content": system_prompt},
+                        {"role": "user", "content": prompt}
+                    ],
+                    temperature=0.3,  # Lower temperature for consistency
                     max_tokens=max_tok
                 )
 
@@ -103,7 +114,7 @@ class MedicalChatGPTClient(BaseLLMClient):
 
     def extract_answer(self, response_text: str, options: Optional[List[str]] = None) -> str:
         """
-        Extract answer from Medical ChatGPT response.
+        Extract answer from Medical ChatGPT response (handles chain-of-thought format).
         
         Args:
             response_text: Raw response text
@@ -120,19 +131,28 @@ class MedicalChatGPTClient(BaseLLMClient):
             return text.split('\n')[0].strip()[:200]
 
         last_letter = chr(65 + max(0, len(options) - 1))
-        letter_pattern = rf"(?i)\b([A-{last_letter}])\b"
-
-        # Try common explicit answer patterns first
-        m = re.search(rf"(?im)answer\s*[:\-]?\s*([A-{last_letter}])", text)
-        if not m:
-            m = re.search(rf"(?im)^\s*([A-{last_letter}])(?:[\.\)])", text)
-        if not m:
-            m = re.search(letter_pattern, text)
-
+        
+        # Priority 1: Look for "Final Answer: X" pattern
+        m = re.search(rf"(?i)final\s*answer\s*[:\-]?\s*([A-{last_letter}])", text)
+        if m:
+            return m.group(1).upper()
+        
+        # Priority 2: Look for "The answer is X" or "Answer: X"
+        m = re.search(rf"(?i)(?:the\s+)?answer\s+(?:is\s+)?[:\-]?\s*([A-{last_letter}])\b", text)
+        if m:
+            return m.group(1).upper()
+        
+        # Priority 3: Standalone letter at end
+        m = re.search(rf"(?im)[:\-]?\s*\(?([A-{last_letter}])\)?\s*$", text)
+        if m:
+            return m.group(1).upper()
+        
+        # Priority 4: First letter in valid range
+        m = re.search(rf"(?i)\b([A-{last_letter}])\b", text)
         if m:
             return m.group(1).upper()
 
-        # Match option text -> return corresponding letter
+        # Fallback: match option text
         for i, option in enumerate(options):
             if isinstance(option, str) and re.search(re.escape(option), text, re.I):
                 return chr(65 + i)
