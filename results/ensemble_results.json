@@ -1,0 +1,65 @@
+{
+  "medqa": {
+    "ensemble_accuracy": 0.94,
+    "individual_accuracies": {
+      "gpt4": 0.86,
+      "llama2": 0.32,
+      "medical_ai_4o": 0.96
+    },
+    "best_individual": {
+      "model": "medical_ai_4o",
+      "accuracy": 0.96
+    },
+    "improvement_over_best": -0.020000000000000018,
+    "weights": {
+      "gpt4": 0.39501557632398754,
+      "llama2": 0.16791277258566978,
+      "medical_ai_4o": 0.4370716510903426
+    },
+    "avg_confidence": 0.8468099688473519,
+    "avg_disagreement_rate": 0.37,
+    "n_samples": 50
+  },
+  "pubmedqa": {
+    "ensemble_accuracy": 0.74,
+    "individual_accuracies": {
+      "gpt4": 0.72,
+      "llama2": 0.66,
+      "medical_ai_4o": 0.68
+    },
+    "best_individual": {
+      "model": "gpt4",
+      "accuracy": 0.72
+    },
+    "improvement_over_best": 0.020000000000000018,
+    "weights": {
+      "gpt4": 0.3478964401294498,
+      "llama2": 0.32168284789644014,
+      "medical_ai_4o": 0.33042071197411005
+    },
+    "avg_confidence": 0.895663430420712,
+    "avg_disagreement_rate": 0.16,
+    "n_samples": 50
+  },
+  "medmcqa": {
+    "ensemble_accuracy": 0.82,
+    "individual_accuracies": {
+      "gpt4": 0.82,
+      "llama2": 0.54,
+      "medical_ai_4o": 0.78
+    },
+    "best_individual": {
+      "model": "gpt4",
+      "accuracy": 0.82
+    },
+    "improvement_over_best": 0.0,
+    "weights": {
+      "gpt4": 0.37819314641744545,
+      "llama2": 0.26043613707165114,
+      "medical_ai_4o": 0.3613707165109034
+    },
+    "avg_confidence": 0.8561619937694703,
+    "avg_disagreement_rate": 0.26,
+    "n_samples": 50
+  }
+}

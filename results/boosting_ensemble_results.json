@@ -1,0 +1,76 @@
+{
+  "pubmedqa": {
+    "ensemble_accuracy": 0.5,
+    "individual_accuracies": {
+      "gpt4": 0.5,
+      "llama2": 0.4,
+      "medical_ai_4o": 0.5
+    },
+    "weights": {
+      "gpt4": 0.3547619047619048,
+      "llama2": 0.2904761904761905,
+      "medical_ai_4o": 0.3547619047619048
+    },
+    "avg_disagreement_rate": 0.15,
+    "ensemble_predictions": [
+      "yes",
+      "no",
+      "no",
+      "no",
+      "yes",
+      "no",
+      "yes",
+      "yes",
+      "yes",
+      "yes"
+    ]
+  },
+  "medqa_usmle": {
+    "ensemble_accuracy": 1.0,
+    "individual_accuracies": {
+      "gpt4": 0.6666666666666666,
+      "llama2": 0.8333333333333334,
+      "medical_ai_4o": 1.0
+    },
+    "weights": {
+      "gpt4": 0.2733333333333333,
+      "llama2": 0.33333333333333337,
+      "medical_ai_4o": 0.39333333333333337
+    },
+    "avg_disagreement_rate": 0.25,
+    "ensemble_predictions": [
+      "D",
+      "F",
+      "E",
+      "E",
+      "C",
+      "C"
+    ]
+  },
+  "medmcqa": {
+    "ensemble_accuracy": 1.0,
+    "individual_accuracies": {
+      "gpt4": 1.0,
+      "llama2": 0.9,
+      "medical_ai_4o": 0.9
+    },
+    "weights": {
+      "gpt4": 0.3547619047619048,
+      "llama2": 0.32261904761904764,
+      "medical_ai_4o": 0.32261904761904764
+    },
+    "avg_disagreement_rate": 0.1,
+    "ensemble_predictions": [
+      "A",
+      "A",
+      "C",
+      "C",
+      "A",
+      "A",
+      "A",
+      "B",
+      "B",
+      "B"
+    ]
+  }
+}

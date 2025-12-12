@@ -1,0 +1,116 @@
+{
+  "pubmedqa": {
+    "gpt4": {
+      "accuracy": 0.3333333333333333,
+      "n_samples": 6,
+      "predictions": [
+        "yes",
+        "no",
+        "yes",
+        "no",
+        "yes",
+        "no"
+      ]
+    },
+    "llama2": {
+      "accuracy": 0.5,
+      "n_samples": 6,
+      "predictions": [
+        "yes",
+        "maybe",
+        "yes",
+        "no",
+        "yes",
+        "yes"
+      ]
+    },
+    "medical_ai_4o": {
+      "accuracy": 0.16666666666666666,
+      "n_samples": 6,
+      "predictions": [
+        "maybe",
+        "no",
+        "yes",
+        "no",
+        "yes",
+        "no"
+      ]
+    }
+  },
+  "medqa_usmle": {
+    "gpt4": {
+      "accuracy": 0.8333333333333334,
+      "n_samples": 6,
+      "predictions": [
+        "D",
+        "F",
+        "C",
+        "E",
+        "C",
+        "C"
+      ]
+    },
+    "llama2": {
+      "accuracy": 0.16666666666666666,
+      "n_samples": 6,
+      "predictions": [
+        "D",
+        "A",
+        "C",
+        "D",
+        "A",
+        "A"
+      ]
+    },
+    "medical_ai_4o": {
+      "accuracy": 0.6666666666666666,
+      "n_samples": 6,
+      "predictions": [
+        "D",
+        "A",
+        "C",
+        "E",
+        "C",
+        "C"
+      ]
+    }
+  },
+  "medmcqa": {
+    "gpt4": {
+      "accuracy": 1.0,
+      "n_samples": 6,
+      "predictions": [
+        "A",
+        "A",
+        "C",
+        "C",
+        "A",
+        "A"
+      ]
+    },
+    "llama2": {
+      "accuracy": 0.8333333333333334,
+      "n_samples": 6,
+      "predictions": [
+        "A",
+        "A",
+        "D",
+        "C",
+        "A",
+        "A"
+      ]
+    },
+    "medical_ai_4o": {
+      "accuracy": 1.0,
+      "n_samples": 6,
+      "predictions": [
+        "A",
+        "A",
+        "C",
+        "C",
+        "A",
+        "A"
+      ]
+    }
+  }
+}

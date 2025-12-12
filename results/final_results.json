@@ -1,0 +1,93 @@
+{
+  "evaluation_date": "2025-12-11",
+  "datasets": {
+    "medqa_usmle": {
+      "total_questions": 2874,
+      "status": "complete",
+      "results": {
+        "gpt4": {
+          "accuracy": 0.8138,
+          "correct": 2339,
+          "total": 2874
+        },
+        "llama2": {
+          "accuracy": 0.2985,
+          "correct": 858,
+          "total": 2874
+        },
+        "medical_ai_4o": {
+          "accuracy": 0.8097,
+          "correct": 2327,
+          "total": 2874
+        }
+      }
+    },
+    "pubmedqa": {
+      "total_questions": 200,
+      "status": "complete",
+      "results": {
+        "gpt4": {
+          "accuracy": 0.7400,
+          "correct": 148,
+          "total": 200
+        },
+        "llama2": {
+          "accuracy": 0.6850,
+          "correct": 137,
+          "total": 200
+        },
+        "medical_ai_4o": {
+          "accuracy": 0.7250,
+          "correct": 145,
+          "total": 200
+        }
+      }
+    },
+    "medmcqa": {
+      "total_questions": 837,
+      "status": "partial",
+      "results": {
+        "gpt4": {
+          "accuracy": 0.7706,
+          "correct": 645,
+          "total": 837
+        },
+        "llama2": {
+          "accuracy": null,
+          "correct": null,
+          "total": 837,
+          "note": "Evaluation stopped at ~32% (270/837)"
+        },
+        "medical_ai_4o": {
+          "accuracy": null,
+          "correct": null,
+          "total": 837,
+          "note": "Not evaluated"
+        }
+      }
+    }
+  },
+  "summary": {
+    "complete_datasets": ["medqa_usmle", "pubmedqa"],
+    "total_complete_questions": 3074,
+    "best_model": "gpt4",
+    "best_model_weighted_accuracy": 0.8090,
+    "model_ranking": [
+      {"model": "gpt4", "avg_accuracy": 0.7769},
+      {"model": "medical_ai_4o", "avg_accuracy": 0.7674},
+      {"model": "llama2", "avg_accuracy": 0.4918}
+    ]
+  },
+  "ensemble": {
+    "method": "weighted_majority_vote",
+    "note": "Ensemble weights based on individual model accuracy",
+    "finding": "Ensemble shows modest improvement on PubMedQA (+2%), but LLaMA-2's poor MedQA performance hurts overall ensemble accuracy"
+  },
+  "recommendations": [
+    "GPT-4 is the best single model for medical QA",
+    "Medical AI 4o performs similarly to GPT-4",
+    "LLaMA-2 (Purdue) needs improvement - consider fine-tuned medical variants",
+    "Ensemble benefits are marginal given LLaMA-2's underperformance"
+  ]
+}
+

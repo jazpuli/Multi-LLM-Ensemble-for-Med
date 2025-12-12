@@ -50,9 +50,13 @@ env/
 .ipynb_checkpoints/
 *.ipynb_checkpoints
 
-# Results and logs
+# Results and logs (allow JSON files and log files in results/)
 results/*
 !results/FINAL_RESULTS.md
+!results/*.json
+!results/*.txt
+!results/*.log
+results/cache/
 logs/
 *.log
 

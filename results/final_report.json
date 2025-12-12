@@ -1,0 +1,97 @@
+{
+  "datasets_evaluated": [
+    "medqa",
+    "pubmedqa"
+  ],
+  "total_questions": 3074,
+  "models": [
+    "gpt4",
+    "llama2",
+    "medical_ai_4o"
+  ],
+  "results_by_dataset": {
+    "medqa": {
+      "individual": {
+        "gpt4": {
+          "accuracy": 0.014961725817675714,
+          "correct": 43,
+          "total": 2874,
+          "coverage": 0.017397355601948505
+        },
+        "llama2": {
+          "accuracy": 0.0055671537926235215,
+          "correct": 16,
+          "total": 2874,
+          "coverage": 0.017397355601948505
+        },
+        "medical_ai_4o": {
+          "accuracy": 0.016701461377870562,
+          "correct": 47,
+          "total": 2874,
+          "coverage": 0.017397355601948505
+        }
+      },
+      "ensemble": {
+        "accuracy": 0.016353514265831592,
+        "correct": 47,
+        "total": 2874,
+        "avg_confidence": 0.014912948185146884,
+        "disagreement_rate": 0.011830201809324982,
+        "weights": {
+          "gpt4": 0.4018691588785047,
+          "llama2": 0.14953271028037385,
+          "medical_ai_4o": 0.4485981308411215
+        }
+      },
+      "best_individual": {
+        "model": "medical_ai_4o",
+        "accuracy": 0.016701461377870562
+      },
+      "improvement": -0.0003479471120389696
+    },
+    "pubmedqa": {
+      "individual": {
+        "gpt4": {
+          "accuracy": 0.18,
+          "correct": 36,
+          "total": 200,
+          "coverage": 0.25
+        },
+        "llama2": {
+          "accuracy": 0.165,
+          "correct": 33,
+          "total": 200,
+          "coverage": 0.25
+        },
+        "medical_ai_4o": {
+          "accuracy": 0.17,
+          "correct": 34,
+          "total": 200,
+          "coverage": 0.25
+        }
+      },
+      "ensemble": {
+        "accuracy": 0.185,
+        "correct": 37,
+        "total": 200,
+        "avg_confidence": 0.22398058252427183,
+        "disagreement_rate": 0.08,
+        "weights": {
+          "gpt4": 0.3495145631067961,
+          "llama2": 0.32038834951456313,
+          "medical_ai_4o": 0.3300970873786408
+        }
+      },
+      "best_individual": {
+        "model": "gpt4",
+        "accuracy": 0.18
+      },
+      "improvement": 0.0050000000000000044
+    }
+  },
+  "overall": {
+    "ensemble_accuracy": 0.027325959661678594,
+    "avg_best_individual": 0.027000650618087183,
+    "improvement": 0.00032530904359141105
+  }
+}
