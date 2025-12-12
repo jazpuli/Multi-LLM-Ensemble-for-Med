@@ -51,7 +51,8 @@ env/
 *.ipynb_checkpoints
 
 # Results and logs
-results/
+results/*
+!results/FINAL_RESULTS.md
 logs/
 *.log
 
